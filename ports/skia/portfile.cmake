@@ -98,15 +98,17 @@ replace_skia_dep(harfbuzz "/include/harfbuzz" "harfbuzz-icu" "harfbuzz-icu" "")
 replace_skia_dep(icu "/include" "icuuc,icuucd" "icuuc" "U_USING_ICU_NAMESPACE=0")
 replace_skia_dep(libjpeg-turbo "/include" "jpeg,jpegd;turbojpeg,turbojpegd" "jpeg;turbojpeg" "")
 replace_skia_dep(libpng "/include" "libpng16,libpng16d" "libpng16" "")
-replace_skia_dep(libwebp "/include"
-    "webp,webpd;webpdemux,webpdemuxd;webpdecoder,webpdecoderd;libwebpmux,libwebpmuxd"
-    "webp;webpdemux;webpdecoder;libwebpmux" "")
+replace_skia_dep(libwebp "/include" "webp;webpdemux;webpdecoder;webpmux" "webp;webpdemux;webpdecoder;webpmux" "")
 replace_skia_dep(zlib "/include" "z,zlib,zlibd" "z,zlib" "")
 
 set(OPTIONS "\
 skia_use_lua=false \
 skia_enable_tools=false \
 skia_enable_spirv_validation=false")
+
+if(VCPKG_TARGET_ARCHITECTURE STREQUAL "arm64")
+  set(OPTIONS "${OPTIONS} target_cpu=\"arm64\"")
+endif()
 
 # used for passing feature-specific definitions to the config file
 set(SKIA_PUBLIC_DEFINITIONS "")
